@@ -41,8 +41,6 @@ $ docker run --name webapp -d -p 8080:80 sourceimage
 $ docker ps 
 In order to see if the application is working properly, use the following URL on the browser,
 http://52.66.206.163:8080/Time
-<img width="348" alt="image" src="https://github.com/thangacodes/dotnet_webapp/assets/38905243/39fc815a-4ffe-4d66-b2c2-f8a4f70022cf">
-
-
+# You can find the application URL with the output snippet in the repository itself.
 Please note, I referred to this page to build docker image from a .net application given source code.
 https://learn.microsoft.com/en-us/dotnet/core/docker/build-container?tabs=windows&pivots=dotnet-8-0#create-the-dockerfile 
