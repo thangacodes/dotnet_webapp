@@ -23,4 +23,4 @@
 
 
 Please note, I referred to this page to build docker image from a .net application given source code.
-https://learn.microsoft.com/en-us/dotnet/core/docker/build-container?tabs=windows&pivots=dotnet-8-0#create-the-dockerfile
+https://learn.microsoft.com/en-us/dotnet/core/docker/build-container?tabs=windows&pivots=dotnet-8-0#create-the-dockerfile 
