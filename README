@@ -41,6 +41,21 @@ $ docker run --name webapp -d -p 8080:80 sourceimage
 $ docker ps 
 In order to see if the application is working properly, use the following URL on the browser,
 http://52.66.206.163:8080/Time
+
 # You can find the application URL with the output snippet in the repository itself.
 Please note, I referred to this page to build docker image from a .net application given source code.
 https://learn.microsoft.com/en-us/dotnet/core/docker/build-container?tabs=windows&pivots=dotnet-8-0#create-the-dockerfile 
+===============================================================================================================================================================================================
+In order to build and deploy the application in a container, I used AWS Elastic Kubernetes Service, which I am quite familiar with,
+
+# I used Terraform (IaC) to set up the entire infrastructure with EKS cluster on AWS.Terraform binary needs to be installed on the machine for Jenkins to pick it up,
+
+1) Create a VPC with the CIDR range of 192.168.0.0/16
+2) Create '3' private subnet and '1' public subnet to setup Docker and Jenkins CICD on an EC2 machine
+   a) Private_Subnets: 192.168.1.0/24, 192.168.2.0/24, 192.168.3.0/24
+   b) Public_Subnets: 192.168.5.0/24
+3) Also, I have created '1' InternetGateway and '2' RouteTable for each private and public subnet.
+4) Using Jenkins, I created a pipeline job with a couple stages defined in Jenkinsfile, and I installed the required plugins before I built the pipeline job.
+5) The app is going to be deployed in a NameSpace called "webapp" in Kubernetes, and to access the app, I enabled a service called "LoadBalancer" in the cloud.
+6) After deployment, we get an Endpoint of Application LoadBalancer in AWS via Terraform output.tf file.
+7) The WebUI will display the current date and time when you access the unique ALB endpoint on the browser.
