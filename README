@@ -45,7 +45,7 @@ http://52.66.206.163:8080/Time
 # You can find the application URL with the output snippet in the repository itself.
 Please note, I referred to this page to build docker image from a .net application given source code.
 https://learn.microsoft.com/en-us/dotnet/core/docker/build-container?tabs=windows&pivots=dotnet-8-0#create-the-dockerfile 
-===============================================================================================================================================================================================
+==========================================================================================================================
 In order to build and deploy the application in a container, I used AWS Elastic Kubernetes Service, which I am quite familiar with,
 
 # I used Terraform (IaC) to set up the entire infrastructure with EKS cluster on AWS.Terraform binary needs to be installed on the machine for Jenkins to pick it up,
