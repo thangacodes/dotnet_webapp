@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    // Run the PowerShell script to build and deploy
+                    powershell returnStatus: true, script: '.\\Deploy.ps1'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Clean up Docker containers after the build
+            script {
+                powershell returnStatus: true, script: 'docker stop your-container-name'
+                powershell returnStatus: true, script: 'docker rm your-container-name'
+            }
+        }
+    }
+}
