@@ -28,7 +28,6 @@ pipeline {
                     docker run --name webapp -d -p 8090:80 super-service
                     docker ps 
                     docker ps -a
-                    curl -ivk localhost:8090/Time
                     echo "sleep for a while"
                     sleep 30
                     docker stop webapp
