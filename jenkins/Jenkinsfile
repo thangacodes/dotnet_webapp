@@ -25,9 +25,10 @@ pipeline {
                     tree
                     docker build -t super-service .
                     docker images
-                    docker run --name webapp -d -p 8080:80 super-service
+                    docker run --name webapp -d -p 8090:80 super-service
                     sleep 3
-                    docker ps
+                    docker ps 
+                    docker ps -a
                     '''
         }
     }
