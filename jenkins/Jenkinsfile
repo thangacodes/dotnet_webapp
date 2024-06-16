@@ -9,19 +9,19 @@ pipeline {
         }
         stage('InfraBuild') {
             steps {
-                   sh '''
+                   script{
+                       dir('cd Infrabuild_scripts/') {
                       echo "navigating to the Infrabuild_scripts"
-                      cd Infrabuild_scripts/
                       terraform init
                       terraform validate
                       terraform plan -var-file terraform.tfvars
-                   '''
+                  }
             }
         }
             stage('DotnetBuild'){
                 steps{
-                    sh '''
-                    cd super-service/
+                    script{
+                    dir('cd super-service/'){
                     tree
                     docker build -t super-service .
                     docker images
@@ -35,8 +35,9 @@ pipeline {
                     docker rmi -f $(docker images)
                     yes | docker system prune
                     docker images
-                    '''
+                    }
         }
+    }
     }
         stage('Clean Workspace') {
             steps {
