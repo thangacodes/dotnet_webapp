@@ -2,22 +2,22 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('clone') {
             steps {
-                script {
-                    // Run the PowerShell script to build and deploy
-                    powershell returnStatus: true, script: '.\\Deploy.ps1'
-                }
+                sh '''
+                   git clone https://github.com/thangacodes/dotnet_webapp.git
+              '''
             }
         }
-    }
-
-    post {
-        always {
-            // Clean up Docker containers after the build
-            script {
-                powershell returnStatus: true, script: 'docker stop your-container-name'
-                powershell returnStatus: true, script: 'docker rm your-container-name'
+        stage('Build') {
+            steps {
+                sh '''
+                   cd DotNet_project/Infrabuild_scripts
+                   ls -l 
+                   terraform init
+                   terraform validate
+                   terraform plan -var-file terraform.tfvars
+                   '''
             }
         }
     }
