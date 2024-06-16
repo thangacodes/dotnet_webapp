@@ -11,12 +11,12 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh '''
-                   cd Infra_build/Infrabuild_scripts/
-                   ls -l 
-                   terraform init
-                   terraform validate
-                   terraform plan -var-file terraform.tfvars
+                   sh 'cd Infra_build/Infrabuild_scripts/'
+                   sh '''
+                      ls -l 
+                      terraform init
+                      terraform validate
+                      terraform plan -var-file terraform.tfvars
                    '''
             }
         }
