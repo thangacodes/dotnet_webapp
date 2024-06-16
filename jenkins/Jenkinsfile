@@ -2,32 +2,39 @@ pipeline {
     agent any
 
     stages {
-        stage('clone') {
+        stage('Checkout') {
             steps {
-                sh '''
-                   git clone https://github.com/thangacodes/dotnet_webapp.git
-              '''
+                sh 'git clone https://github.com/thangacodes/dotnet_webapp.git'
             }
         }
-        stage('Build') {
+        stage('InfraBuild') {
             steps {
                    sh '''
-                      echo "checking the path"
-                      pwd
-                      sleep 5
                       echo "navigating to the Infrabuild_scripts"
                       cd Infrabuild_scripts/
-                      ls -l 
                       terraform init
                       terraform validate
                       terraform plan -var-file terraform.tfvars
                    '''
             }
+            stage('DotnetBuild'){
+                steps{
+                    sh '''
+                    cd super-service/
+                    tree
+                    docker build -t super-service .
+                    docker images
+                    docker run --name webapp -d -p 8080:80
+                    sleep 3
+                    docker ps
+                    '''
         }
-        stage('Clean Workspace') {
-            steps {
-                cleanWs()
-            }
-        }
+    }
+        // stage('Clean Workspace') {
+        //     steps {
+        //         cleanWs()
+        //     }
+        // }
+    }
     }
 }
