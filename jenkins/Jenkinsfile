@@ -31,6 +31,7 @@ pipeline {
                     echo "sleep for a while"
                     sleep 30
                     docker stop webapp
+                    docker rm webapp
                     docker rmi -f $(docker images)
                     yes | docker system prune
                     docker images
