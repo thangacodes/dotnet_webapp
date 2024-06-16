@@ -29,6 +29,7 @@ pipeline {
                     sleep 3
                     docker ps 
                     docker ps -a
+                    curl -ivk localhost:8090/Time
                     '''
         }
     }
