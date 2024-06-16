@@ -17,6 +17,7 @@ pipeline {
                       terraform plan -var-file terraform.tfvars
                    '''
             }
+        }
             stage('DotnetBuild'){
                 steps{
                     sh '''
@@ -35,6 +36,5 @@ pipeline {
         //         cleanWs()
         //     }
         // }
-    }
     }
 }
