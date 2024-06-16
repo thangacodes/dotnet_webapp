@@ -23,9 +23,9 @@ pipeline {
                     script{
                     dir('cd super-service/'){
                     tree
-                    docker build -t super-service .
+                    docker build -t service .
                     docker images
-                    docker run --name webapp -d -p 8090:80 super-service
+                    docker run --name webapp -d -p 8090:80 service
                     docker ps 
                     docker ps -a
                     echo "sleep for a while"
