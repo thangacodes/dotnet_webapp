@@ -26,10 +26,15 @@ pipeline {
                     docker build -t super-service .
                     docker images
                     docker run --name webapp -d -p 8090:80 super-service
-                    sleep 3
                     docker ps 
                     docker ps -a
                     curl -ivk localhost:8090/Time
+                    echo "sleep for a while"
+                    sleep 30
+                    docker stop webapp
+                    docker rmi -f $(docker images)
+                    yes | docker system prune
+                    docker images
                     '''
         }
     }
