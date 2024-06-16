@@ -12,7 +12,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
-                   cd DotNet_project/Infrabuild_scripts
+                   cd Infra_build/Infrabuild_scripts/
                    ls -l 
                    terraform init
                    terraform validate
