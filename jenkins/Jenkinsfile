@@ -15,10 +15,12 @@ pipeline {
                       echo "checking the path"
                       pwd
                       sleep 5
+                      echo "navigating to the Infrabuild_scripts"
+                      cd Infrabuild_scripts/
                       ls -l 
-                      // terraform init
-                      // terraform validate
-                      // terraform plan -var-file terraform.tfvars
+                      terraform init
+                      terraform validate
+                      terraform plan -var-file terraform.tfvars
                    '''
             }
         }
