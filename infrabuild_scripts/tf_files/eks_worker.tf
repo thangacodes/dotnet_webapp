@@ -112,9 +112,9 @@ resource "aws_eks_node_group" "node" {
     aws_subnet.privatesubnet3.id]
 
   scaling_config {
-    desired_size = 1
+    desired_size = 2
     max_size     = 2
-    min_size     = 1
+    min_size     = 2
   }
   launch_template {
     id      = aws_launch_template.eks_node_launch_template.id
