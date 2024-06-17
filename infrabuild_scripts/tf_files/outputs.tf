@@ -1,3 +1,7 @@
+output "ubuntu_ami_id" {
+value = data.aws_ami.ubuntu
+}
+
 output "eks_cluster_endpoint" {
   value = aws_eks_cluster.aws_eks.endpoint
 }
