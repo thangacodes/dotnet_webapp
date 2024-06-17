@@ -16,7 +16,7 @@ pipeline {
         stage('InfraBuild') {
             steps {
                 script {
-                    dir('infrabuild_scripts/tf_files') {
+                    dir('infrabuild_scripts') {
                         echo "navigating to the Infrabuild_scripts"
 			input(message: "Are you sure to proceed?", ok: "Proceed")
                         sh '''
