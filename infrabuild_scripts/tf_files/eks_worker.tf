@@ -76,7 +76,7 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
 
 resource "aws_launch_template" "eks_node_launch_template" {
   name_prefix   = "eks-node-launch-template-"
-  image_id      = data.aws_ami.amazon.id
+  image_id      = data.aws_ami.ubuntu.id
   instance_type = "t2.small"
   key_name      = "tfuser"
 
