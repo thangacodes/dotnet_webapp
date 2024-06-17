@@ -23,8 +23,8 @@ resource "aws_nat_gateway" "nat" {
 }
 
 resource "aws_eip" "nat_eip" {
-  vpc = true
-  tags = merge(var.tagging, { Name = "DotNet-NAT-EIP" })
+  domain   = "vpc"
+  tags     = merge(var.tagging, { Name = "DotNet-NAT-EIP" })
 }
 
 resource "aws_route_table" "privatert" {
