@@ -1,7 +1,7 @@
 pipeline {
     agent any
 	environment {
-	    AWS_ACCESS_KEY_ID         = credentials('AWS_ACCESS_KEY_ID')
+	        AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
 		AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
 		AWS_DEFAULT_REGION    = "ap-south-1"
 	}
@@ -34,6 +34,7 @@ pipeline {
 	       script {
 		   dir('super-service'){
 			echo "Image build and pushing to docker hub repo.."
+			input(message: "Do you want to proceed?", ok: "Yes")
 			sh '''
                         tree
 			docker build -t dotnet .
