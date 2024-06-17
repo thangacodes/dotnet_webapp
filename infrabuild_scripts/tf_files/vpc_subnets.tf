@@ -16,12 +16,25 @@ resource "aws_route_table" "publicrt" {
     gateway_id = aws_internet_gateway.igw.id
   }
 }
+resource "aws_nat_gateway" "nat" {
+  allocation_id = aws_eip.nat_eip.id
+  subnet_id     = aws_subnet.publicsubnet1.id
+  tags          = merge(var.tagging, { Name = "DotNet-NAT" })
+}
+
+resource "aws_eip" "nat_eip" {
+  vpc = true
+  tags = merge(var.tagging, { Name = "DotNet-NAT-EIP" })
+}
 
 resource "aws_route_table" "privatert" {
   vpc_id = aws_vpc.main.id
   tags   = merge(var.tagging, { Name = "PrivateRT" })
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat.id
 }
-
+}
 resource "aws_route" "private_route1" {
   route_table_id         = aws_route_table.privatert.id
   destination_cidr_block = var.private_subnet1
