@@ -97,12 +97,11 @@ resource "aws_launch_template" "eks_node_launch_template" {
 }
 
 data "aws_ami_ids" "ubuntu" {
-  owners = ["099720109477"]
+  owners = ["137112412989"]
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-*"]
-
+    values = ["amazon/al2023-ami-2023.4.20240611.0-kernel-6.1-*"]
   }
 }
 
