@@ -13,9 +13,11 @@ pipeline {
                     dir('infrabuild_scripts/tf_files') {
                         echo "navigating to the Infrabuild_scripts"
 			input(message: "Are you sure to proceed?", ok: "Proceed")
-                        sh 'terraform init'
-                        sh 'terraform validate'
-			sh 'terraform apply -var-file=terraform.tfvars --auto-approve'
+                        sh '''
+			terraform init
+                        terraform fmt
+                        terraform validate
+			terraform apply -var-file=terraform.tfvars --auto-approve
                     }
                 }
             }
