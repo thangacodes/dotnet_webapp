@@ -74,6 +74,38 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
   role       = aws_iam_role.eks_nodes.name
 }
 
+resource "aws_launch_template" "eks_node_launch_template" {
+  name_prefix   = "eks-node-launch-template-"
+  image_id      = data.aws_ami_ids.ubuntu.id
+  instance_type = "t2.small"
+
+  key_name = "tfuser" # Specify your key pair here
+
+  block_device_mappings {
+    device_name = "/dev/xvda"
+    ebs {
+      volume_size = 20
+    }
+  }
+
+  tag_specifications {
+    resource_type = "instance"
+    tags = {
+      Name = "eks-node"
+    }
+  }
+}
+
+data "aws_ami_ids" "ubuntu" {
+  owners = ["282526987315"]
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-*"]
+
+  }
+}
+
 resource "aws_eks_node_group" "node" {
   cluster_name    = aws_eks_cluster.aws_eks.name
   node_group_name = "project-nodegroup"
@@ -81,19 +113,24 @@ resource "aws_eks_node_group" "node" {
   subnet_ids = [
     aws_subnet.privatesubnet1.id,
     aws_subnet.privatesubnet2.id,
-  aws_subnet.privatesubnet3.id]
+    aws_subnet.privatesubnet3.id]
 
   scaling_config {
     desired_size = 1
     max_size     = 2
     min_size     = 1
   }
+  launch_template {
+    id      = aws_launch_template.eks_node_launch_template.id
+    version = "$Latest"
+  }
+
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
   # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
+
   depends_on = [
     aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
   ]
 }
-
