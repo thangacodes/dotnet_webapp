@@ -76,10 +76,9 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
 
 resource "aws_launch_template" "eks_node_launch_template" {
   name_prefix   = "eks-node-launch-template-"
-  image_id      = data.aws_ami_ids.ubuntu.id
+  image_id      = data.aws_ami.amazon.id
   instance_type = "t2.small"
-
-  key_name = "tfuser" # Specify your key pair here
+  key_name      = "tfuser"
 
   block_device_mappings {
     device_name = "/dev/xvda"
@@ -87,7 +86,6 @@ resource "aws_launch_template" "eks_node_launch_template" {
       volume_size = 20
     }
   }
-
   tag_specifications {
     resource_type = "instance"
     tags = {
@@ -95,16 +93,15 @@ resource "aws_launch_template" "eks_node_launch_template" {
     }
   }
 }
-
-data "aws_ami_ids" "ubuntu" {
+data "aws_ami" "amazon" {
+  most_recent = true
   owners = ["137112412989"]
 
   filter {
     name   = "name"
-    values = ["amazon/al2023-ami-2023.4.20240611.0-kernel-6.1-*"]
+    values = ["amazon/al2023-ami-2023.4.20240611.0-kernel-6.1-x86_64"]
   }
 }
-
 resource "aws_eks_node_group" "node" {
   cluster_name    = aws_eks_cluster.aws_eks.name
   node_group_name = "project-nodegroup"
