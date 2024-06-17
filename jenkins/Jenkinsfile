@@ -10,7 +10,7 @@ pipeline {
         stage('InfraBuild') {
             steps {
                 script {
-                    dir('Infrabuild_scripts') {
+                    dir('infrabuild_scripts/tf_files') {
                         echo "navigating to the Infrabuild_scripts"
                         sh 'terraform init'
                         sh 'terraform validate'
