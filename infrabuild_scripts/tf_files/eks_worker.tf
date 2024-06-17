@@ -93,13 +93,13 @@ resource "aws_launch_template" "eks_node_launch_template" {
     }
   }
 }
-data "aws_ami" "amazon" {
+data "aws_ami" "ubuntu" {
   most_recent = true
-  owners = ["137112412989"]
+  owners = ["amazon"]
 
   filter {
     name   = "name"
-    values = ["amazon/al2023-ami-2023.4.20240611.0-kernel-6.1-x86_64"]
+    values = ["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-20240423"]
   }
 }
 resource "aws_eks_node_group" "node" {
