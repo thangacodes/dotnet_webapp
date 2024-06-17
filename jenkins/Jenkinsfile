@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                sh 'git clone https://github.com/thangacodes/dotnet_webapp.git'
+            }
+        }
+        stage('InfraBuild') {
+            steps {
+                script {
+                    dir('infrabuild_scripts/tf_files') {
+                        echo "navigating to the Infrabuild_scripts"
+                        sh 'terraform init'
+                        sh 'terraform validate'
+                        sh 'terraform plan -var-file=terraform.tfvars'
+						sh 'terraform apply --auto-approve'
+                    }
+                }
+            }
+        }
+    }
+}
