@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket         = "project-cicd-tf-eks"
+    bucket         = "project-cicd-tf-durai"
     key            = "eks/terraform.tfstate"
     region         = "us-east-1"
     encrypt        = true
