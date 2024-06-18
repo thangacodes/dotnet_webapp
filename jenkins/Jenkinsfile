@@ -23,7 +23,7 @@ pipeline {
 			terraform init
                         terraform fmt
                         terraform validate
-			terraform plan -var-file=terraform.tfvars
+			terraform apply -var-file=terraform.tfvars
                         '''
                     }
                 }
@@ -34,7 +34,7 @@ pipeline {
 	       script {
 		   dir('super-service'){
 			echo "Image build and pushing to docker hub repo.."
-			input(message: "Do you want to proceed?", ok: "Yes")
+			// input(message: "Do you want to proceed?", ok: "Yes")
 			sh '''
                         tree
 			docker build -t dotnet .
@@ -59,7 +59,7 @@ pipeline {
 	    steps{
 		   script {
 		    dir('kubefiles'){
-	            input(message: "Do you want to proceed?", ok: "Yes")
+	            // input(message: "Do you want to proceed?", ok: "Yes")
 		    sh '''
 			echo "kubectl version checking.."
                         kubectl version --client
