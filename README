@@ -59,3 +59,21 @@ In order to build and deploy the application in a container, I used AWS Elastic 
 5) The app is going to be deployed in a NameSpace called "webapp" in Kubernetes, and to access the app, I enabled a service called "LoadBalancer" in the cloud.
 6) After deployment, we get an Endpoint of Application LoadBalancer in AWS via Terraform output.tf file.
 7) The WebUI will display the current date and time when you access the unique ALB endpoint on the browser.
+
+## How to execute the Terraform code in standalone machine:
+In the end, all you have to do is clone the code wherever you want,
+$ git clone https://github.com/thangacodes/dotnet_webapp.git
+$ cd dotnet_webapp/infrabuild_scripts
+$ terraform init
+$ terraform fmt
+$ terraform plan -var-file terraform.tfvars
+$ terraform apply -var-file terraform.tfvars --auto-approve
+
+# Terraform scripts executing the required setup will be provisioned on AWS accounts once the scripts are executed.
+$ aws eks update-kubeconfig --name project_eks_cluster    //Update kubeconfig file
+$ cd ../kubefiles/
+$ kubectl get nodes               //checking the node
+$ kubectl apply -f ns.yaml       //Creating a custom namespace (virtual cluster)
+$ kubectl apply -f service.yaml //Deployment with ALB provision
+
+Note: A dotnet image has already been pushed to my public DockerHub repository, so anyone can pull it.
